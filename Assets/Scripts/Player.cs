@@ -5,14 +5,16 @@ using UnityEngine;
 public class Player : MonoBehaviour {
 
     [SerializeField] float moveSpeed = 15f;
+    [SerializeField] float movementBorderWidth = 1f;
 
     //cashe
-    private float cameraSize;
+    private float cameraSizeX, cameraSizeY;
 
 	// Use this for initialization
 	void Start () {
-        cameraSize = Camera.main.orthographicSize;
-        Debug.Log(cameraSize);
+        float cameraHeight = Camera.main.orthographicSize * 2;
+        cameraSizeX = (cameraHeight * Camera.main.aspect) - movementBorderWidth;
+        cameraSizeY = cameraHeight - movementBorderWidth;
 	}
 	
 	// Update is called once per frame
@@ -23,10 +25,10 @@ public class Player : MonoBehaviour {
     private void Move()
     {
         float deltaX = Input.GetAxis("Horizontal")*Time.deltaTime*moveSpeed;
-        float newPosX = Mathf.Clamp(transform.position.x + deltaX,-4,4);
+        float newPosX = Mathf.Clamp(transform.position.x + deltaX, -cameraSizeX/2, cameraSizeX/2);
 
         float deltaY = Input.GetAxis("Vertical") * Time.deltaTime * moveSpeed;
-        float newPosY = transform.position.y + deltaY;
+        float newPosY = Mathf.Clamp(transform.position.y + deltaY, -cameraSizeY/2, cameraSizeY/2);
 
 
         transform.position = new Vector2(newPosX, newPosY);
