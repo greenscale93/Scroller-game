@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,21 +7,54 @@ public class Player : MonoBehaviour {
 
     [SerializeField] float moveSpeed = 15f;
     [SerializeField] float movementBorderWidth = 1f;
+    [SerializeField] GameObject laserPrefab;
+    [SerializeField] float fireSpeed = 1f;
 
     //cashe
     private float cameraSizeX, cameraSizeY;
+    Coroutine firingCoroutine;
 
 	// Use this for initialization
-	void Start () {
+	void Start ()
+    {
+        SetCameraParameters();
+    }
+
+    private void SetCameraParameters()
+    {
         float cameraHeight = Camera.main.orthographicSize * 2;
         cameraSizeX = (cameraHeight * Camera.main.aspect) - movementBorderWidth;
         cameraSizeY = cameraHeight - movementBorderWidth;
+    }
+
+    // Update is called once per frame
+    void Update () {
+        Move();
+        Fire();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-        Move();	
-	}
+
+    private void Fire()
+    {
+        if (Input.GetButtonDown("Fire1"))
+        {
+            firingCoroutine = StartCoroutine(FireContiniously(laserPrefab));
+        }
+        if (Input.GetButtonUp("Fire1"))
+        {
+            StopCoroutine(firingCoroutine);
+        }
+    }
+
+    IEnumerator FireContiniously(GameObject laserPrefab)
+    {      
+            while (true)
+            {
+                var laser = Instantiate(laserPrefab, transform.position, Quaternion.identity);
+                laser.GetComponent<Rigidbody2D>().velocity = new Vector2(0, laser.GetComponent<Laser>().GetProjectileSpeed());
+
+                yield return new WaitForSeconds(fireSpeed);
+            }
+    }
 
     private void Move()
     {
