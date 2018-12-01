@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 60429746048629836}
   m_Layer: 0
   m_Name: Enemy_Small
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -90,6 +90,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf9a96c5beaa3f94c8dc98fe05fc0823, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 500
+  score: 200
+  healthBarOffset: 1
+  shotDelay: 5
+  shotRandomFactor: 3
+  weaponPrefab: {fileID: 1996954894350132, guid: d1f292666d69325439a9ea4725ede783,
+    type: 2}
+  healthBarPrefab: {fileID: 1817708656851742, guid: 24abefca38a743347aaf353b40e198a1,
+    type: 2}
 --- !u!212 &212311454330209096
 SpriteRenderer:
   m_ObjectHideFlags: 1

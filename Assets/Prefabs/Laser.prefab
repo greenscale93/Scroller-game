@@ -90,6 +90,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectileSpeed: 20
+  damage: 100
 --- !u!212 &212082733727388362
 SpriteRenderer:
   m_ObjectHideFlags: 1

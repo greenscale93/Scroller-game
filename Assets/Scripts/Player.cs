@@ -9,6 +9,7 @@ public class Player : MonoBehaviour {
     [SerializeField] float movementBorderWidth = 1f;
     [SerializeField] GameObject laserPrefab;
     [SerializeField] float fireSpeed = 1f;
+    [SerializeField] float health = 100;
 
     //cashe
     private float cameraSizeX, cameraSizeY;
@@ -67,4 +68,34 @@ public class Player : MonoBehaviour {
 
         transform.position = new Vector2(newPosX, newPosY);
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Enemy")
+        {
+            DecreaseLife(100);
+        }
+    }
+
+    public void HandleHit(float damage)
+    {
+        DecreaseLife(damage);
+    }
+
+
+    private void DecreaseLife(float amount)
+    {
+        health -= amount;
+        CheckDeath();
+    }
+
+    private void CheckDeath()
+    {
+        if (health <= 0)
+        {
+            Destroy(gameObject);
+            FindObjectOfType<SceneLoader>().ReloadScene();
+        }
+    }
+
 }

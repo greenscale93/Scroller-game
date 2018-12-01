@@ -5,13 +5,17 @@ using UnityEngine;
 public class WaveSpawner : MonoBehaviour {
 
     [SerializeField] List<WaveConfig> waveConfigs;
+    [SerializeField] bool isRepeating = true;
 
-	void Start () {
-	
-        foreach(WaveConfig wave in waveConfigs)
+	IEnumerator Start () {
+        do
         {
-            StartCoroutine(SpawnWave(wave));
+            foreach (WaveConfig wave in waveConfigs)
+            {
+                yield return StartCoroutine(SpawnWave(wave));
+            }
         }
+        while (isRepeating);
 
 	}
 

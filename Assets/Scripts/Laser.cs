@@ -5,6 +5,7 @@ using UnityEngine;
 public class Laser : MonoBehaviour {
 
     [SerializeField] float projectileSpeed = 10f;
+    [SerializeField] float damage = 100;
 
     public float GetProjectileSpeed()
     {
@@ -13,7 +14,10 @@ public class Laser : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Destroy(collision.gameObject);
+        if(collision.gameObject.tag == "Enemy")
+        {
+            collision.gameObject.GetComponent<Enemy>().HandleHit(damage);
+        }
         Destroy(gameObject);
     }
 
