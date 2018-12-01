@@ -93,8 +93,8 @@ MonoBehaviour:
   health: 500
   score: 200
   healthBarOffset: 1
-  shotDelay: 5
-  shotRandomFactor: 3
+  shotDelay: 2
+  shotRandomFactor: 1
   weaponPrefab: {fileID: 1996954894350132, guid: d1f292666d69325439a9ea4725ede783,
     type: 2}
   healthBarPrefab: {fileID: 1817708656851742, guid: 24abefca38a743347aaf353b40e198a1,

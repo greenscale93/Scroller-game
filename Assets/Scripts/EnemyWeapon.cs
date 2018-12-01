@@ -19,6 +19,11 @@ public class EnemyWeapon : MonoBehaviour {
             collision.gameObject.GetComponent<Player>().HandleHit(damage);
             Destroy(gameObject);
         }
+        else if (collision.gameObject.tag == "PlayerProjectile")
+        {
+            Destroy(collision.gameObject);
+            Destroy(gameObject);
+        }
     }
 
 }
