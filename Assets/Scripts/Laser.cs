@@ -19,6 +19,7 @@ public class Laser : MonoBehaviour {
             collision.gameObject.GetComponent<Enemy>().HandleHit(damage);
         }
         Destroy(gameObject);
+
     }
 
 }

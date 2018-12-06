@@ -9,4 +9,10 @@ public class SceneLoader : MonoBehaviour {
     {
         SceneManager.LoadScene(0);
     }
+
+    public void LoadLoseScene()
+    {
+        SceneManager.LoadScene("LoseScene");
+    }
+
 }

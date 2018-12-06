@@ -6,6 +6,18 @@ public class GameStatus : MonoBehaviour {
 
     [SerializeField] float score = 0;
 
+    private void Awake()
+    {
+        if(FindObjectsOfType<GameStatus>().Length > 1)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            DontDestroyOnLoad(gameObject);
+        }
+    }
+
     public void AddScore(float score)
     {
         this.score += score;

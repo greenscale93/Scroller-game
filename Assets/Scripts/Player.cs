@@ -82,7 +82,6 @@ public class Player : MonoBehaviour {
         DecreaseLife(damage);
     }
 
-
     private void DecreaseLife(float amount)
     {
         health -= amount;
@@ -94,8 +93,13 @@ public class Player : MonoBehaviour {
         if (health <= 0)
         {
             Destroy(gameObject);
-            FindObjectOfType<SceneLoader>().ReloadScene();
+            FindObjectOfType<SceneLoader>().LoadLoseScene();
         }
+    }
+
+    public float GetHealth()
+    {
+        return health;
     }
 
 }

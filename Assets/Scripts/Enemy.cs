@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour {
     [SerializeField] float shotDelay = 5f;
     [SerializeField] float shotRandomFactor = 3f;
     [SerializeField] GameObject weaponPrefab;
+    [SerializeField] GameObject deathParticlePrefab;
 
     Coroutine shootingCoroutine;
     private float maxHealth;
@@ -59,6 +60,9 @@ public class Enemy : MonoBehaviour {
     {
         if (isKilled)
         {
+            var explosion = Instantiate(deathParticlePrefab, transform.position, Quaternion.identity);
+            Destroy(explosion, 1f);
+
             gameStatus.AddScore(score);
         }
         StopCoroutine(shootingCoroutine);
