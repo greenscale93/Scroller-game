@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 114147999227861138}
   - component: {fileID: 60629106918874392}
   - component: {fileID: 50554282191307598}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -126,8 +126,12 @@ MonoBehaviour:
   movementBorderWidth: 1
   laserPrefab: {fileID: 1131031930932706, guid: b272f6ccc26b9ad4e864c66e0ff521e7,
     type: 2}
-  fireSpeed: 0.1
+  fireSpeed: 0.5
   health: 100
+  projectileSpread: 3
+  maxLife: 1000
+  maxProjectiles: 6
+  minFireRate: 0.25
 --- !u!212 &212453975380998560
 SpriteRenderer:
   m_ObjectHideFlags: 1

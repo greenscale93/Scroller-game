@@ -6,6 +6,11 @@ public class GameStatus : MonoBehaviour {
 
     [SerializeField] float score = 0;
 
+    public void ResetGame()
+    {
+        Destroy(gameObject);
+    }
+
     private void Awake()
     {
         if(FindObjectsOfType<GameStatus>().Length > 1)

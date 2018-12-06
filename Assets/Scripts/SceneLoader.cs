@@ -7,12 +7,18 @@ public class SceneLoader : MonoBehaviour {
 
 	public void ReloadScene()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void LoadLoseScene()
     {
         SceneManager.LoadScene("LoseScene");
+    }
+
+    public void LoadStartScene()
+    {
+        FindObjectOfType<GameStatus>().ResetGame();
+        SceneManager.LoadScene(0);
     }
 
 }

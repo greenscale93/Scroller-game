@@ -6,6 +6,7 @@ public class WaveSpawner : MonoBehaviour {
 
     [SerializeField] List<WaveConfig> waveConfigs;
     [SerializeField] bool isRepeating = true;
+    float amplificationRate = 1f;
 
 	IEnumerator Start () {
         do
@@ -13,10 +14,10 @@ public class WaveSpawner : MonoBehaviour {
             foreach (WaveConfig wave in waveConfigs)
             {
                 yield return StartCoroutine(SpawnWave(wave));
+                amplificationRate *= 1.03f;
             }
         }
         while (isRepeating);
-
 	}
 
     IEnumerator SpawnWave(WaveConfig wave)
@@ -28,6 +29,11 @@ public class WaveSpawner : MonoBehaviour {
 
             yield return new WaitForSeconds(wave.GetSpawnDelay());
         }
+    }
+
+    public float GetAmplificationRate()
+    {
+        return amplificationRate;
     }
 
 }

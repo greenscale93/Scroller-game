@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 212311454330209096}
   - component: {fileID: 114478943937665682}
   - component: {fileID: 60429746048629836}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Enemy_Small
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -90,7 +90,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf9a96c5beaa3f94c8dc98fe05fc0823, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 500
+  health: 400
   score: 200
   healthBarOffset: 1
   shotDelay: 5
@@ -100,6 +100,12 @@ MonoBehaviour:
   deathParticlePrefab: {fileID: 1356803931362274, guid: 0fc6617740efe554880121b0da78575a,
     type: 2}
   healthBarPrefab: {fileID: 1817708656851742, guid: 24abefca38a743347aaf353b40e198a1,
+    type: 2}
+  crateChance: 20
+  lifeCrate: {fileID: 1209403806649948, guid: a745d9331e72ba3449898637f300698e, type: 2}
+  weaponCrate: {fileID: 1209403806649948, guid: b9702a24f1d0b5b45ad30327ea6bd422,
+    type: 2}
+  fireRateCrate: {fileID: 1209403806649948, guid: 5d558008b3429ba449c5d583b761d4ee,
     type: 2}
 --- !u!212 &212311454330209096
 SpriteRenderer:

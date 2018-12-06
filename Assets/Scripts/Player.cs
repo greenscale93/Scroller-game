@@ -10,6 +10,15 @@ public class Player : MonoBehaviour {
     [SerializeField] GameObject laserPrefab;
     [SerializeField] float fireSpeed = 1f;
     [SerializeField] float health = 100;
+    [SerializeField] float projectileSpread = 1f;
+
+    [Header("Max improvements")]
+    [SerializeField] float maxLife;
+    [SerializeField] int maxProjectiles;
+    [SerializeField] float minFireRate;
+
+    private int lasersAmount = 1;
+    GameObject laser,laser2;
 
     //cashe
     private float cameraSizeX, cameraSizeY;
@@ -38,7 +47,7 @@ public class Player : MonoBehaviour {
     {
         if (Input.GetButtonDown("Fire1"))
         {
-            firingCoroutine = StartCoroutine(FireContiniously(laserPrefab));
+            firingCoroutine = StartCoroutine(FireContiniously());
         }
         if (Input.GetButtonUp("Fire1"))
         {
@@ -46,15 +55,19 @@ public class Player : MonoBehaviour {
         }
     }
 
-    IEnumerator FireContiniously(GameObject laserPrefab)
-    {      
-            while (true)
+    IEnumerator FireContiniously()
+    {
+        while (true)
+        {
+            for (int i = 0; i < lasersAmount; i++)
             {
-                var laser = Instantiate(laserPrefab, transform.position, Quaternion.identity);
-                laser.GetComponent<Rigidbody2D>().velocity = new Vector2(0, laser.GetComponent<Laser>().GetProjectileSpeed());
+                float xVelocity = ((-((float)lasersAmount - 1) / 2) + i) * projectileSpread;
 
-                yield return new WaitForSeconds(fireSpeed);
+                laser = Instantiate(laserPrefab, transform.position, Quaternion.identity);
+                laser.GetComponent<Rigidbody2D>().velocity = new Vector2(xVelocity, laser.GetComponent<Laser>().GetProjectileSpeed());
             }
+            yield return new WaitForSeconds(fireSpeed);
+        }
     }
 
     private void Move()
@@ -86,6 +99,24 @@ public class Player : MonoBehaviour {
     {
         health -= amount;
         CheckDeath();
+    }
+
+    public void IncreaseLife(float amount)
+    {
+        health += amount;
+        health = Mathf.Min(health, maxLife);
+    }
+
+    public void IncreaseFireRate(float amount)
+    {
+        fireSpeed -= amount;
+        fireSpeed = Mathf.Max(fireSpeed, minFireRate);
+    }
+
+    public void AddProjectile(int amount)
+    {
+        lasersAmount += amount;
+        lasersAmount = Mathf.Min(lasersAmount, maxProjectiles);
     }
 
     private void CheckDeath()

@@ -11,11 +11,19 @@ public class Enemy : MonoBehaviour {
     [SerializeField] float shotRandomFactor = 3f;
     [SerializeField] GameObject weaponPrefab;
     [SerializeField] GameObject deathParticlePrefab;
+    
+    [SerializeField] GameObject healthBarPrefab;
+
+    [Header("Crates")]
+    [SerializeField] float crateChance = 20f;
+    [SerializeField] GameObject lifeCrate;
+    [SerializeField] GameObject weaponCrate;
+    [SerializeField] GameObject fireRateCrate; 
 
     Coroutine shootingCoroutine;
     private float maxHealth;
-
-    [SerializeField] GameObject healthBarPrefab;
+    private float waveAmplification;
+    
     GameObject healthBar;
     GameStatus gameStatus;
 
@@ -63,6 +71,28 @@ public class Enemy : MonoBehaviour {
             var explosion = Instantiate(deathParticlePrefab, transform.position, Quaternion.identity);
             Destroy(explosion, 1f);
 
+            //drop crate
+            float containCrate = Random.Range(0, 100);
+            if(containCrate <= crateChance)
+            {
+                int crateType = Random.Range(1, 4);
+                if (crateType == 1)
+                {
+                    //health
+                    Instantiate(lifeCrate, transform.position, transform.rotation);
+                }
+                else if (crateType == 2)
+                {
+                    //weapon
+                    Instantiate(weaponCrate, transform.position, transform.rotation);
+                }
+                else if (crateType == 3)
+                {
+                    //fireRate
+                    Instantiate(fireRateCrate, transform.position, transform.rotation);
+                }
+            }            
+
             gameStatus.AddScore(score);
         }
         StopCoroutine(shootingCoroutine);
@@ -73,11 +103,21 @@ public class Enemy : MonoBehaviour {
 	void Start ()
     {
         gameStatus = FindObjectOfType<GameStatus>();
-        maxHealth = health;
+        waveAmplification = FindObjectOfType<WaveSpawner>().GetAmplificationRate();
+
+        InitializeEnemyParameters();
         InitializeMovement();
         InitializeHealthBar();
 
         shootingCoroutine = StartCoroutine(Shoot());
+    }
+
+    private void InitializeEnemyParameters()
+    {
+        health = health * waveAmplification;
+        maxHealth = health;
+        shotDelay -= shotDelay * (waveAmplification - 1);
+        shotRandomFactor -= shotRandomFactor * (waveAmplification - 1);
     }
 
     private void InitializeHealthBar()
@@ -95,7 +135,7 @@ public class Enemy : MonoBehaviour {
         transform.position = waypoints[waypointIndex].position;
 
         targetPosition = waypoints[waypointIndex + 1].position;
-        moveVelocity = waveConfig.GetEnemySpeed();
+        moveVelocity = waveConfig.GetEnemySpeed() * waveAmplification;
     }
 
     public void SetWaveConfig(WaveConfig waveConfig)
